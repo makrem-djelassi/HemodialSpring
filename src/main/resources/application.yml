@@ -1,0 +1,38 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/HemodialDB?serverTimezone=Europe/Paris&createDatabaseIfNotExist=true
+    password: ''
+    username: root
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    password: 30123012
+    port: 587
+    properties:
+      mail:
+        debug: true
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: hemodial@gmail.com
+  variables:
+    secretKey: "3F4528472B4B6250655368566D597133743677397A24432646294A404D635166"
+    expiredTime: 86400000
