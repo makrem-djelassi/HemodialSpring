@@ -28,8 +28,6 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/auth/**","/api/forgetPassword/**"
                         ,"/api/patient/**","/api/clinique/**")
                 .permitAll()
-                .requestMatchers("/api/patient/**")
-                .hasAuthority("GERANT")
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -14,7 +14,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequest request){
-        if(request.getRole().equalsIgnoreCase("GERANT"))
+        if(request.getRole().equalsIgnoreCase("DOCTOR"))
             return ResponseEntity.ok(authenticationService.registerUser(request));
         else
             return null;

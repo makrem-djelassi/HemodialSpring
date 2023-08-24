@@ -1,19 +1,26 @@
 package com.hemodialBackend.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import com.hemodialBackend.models.Role;
+import com.hemodialBackend.models.User;
+import com.hemodialBackend.models.Clinique;
+import com.hemodialBackend.repositories.PatientRepository;
+import com.hemodialBackend.services.CliniqueService;
+import com.hemodialBackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.hemodialBackend.models.Patient;
 
 import com.hemodialBackend.services.PatientService;
 import lombok.RequiredArgsConstructor;
+
+import javax.swing.text.html.Option;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 
 @RestController
@@ -21,24 +28,74 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/patient/")
 
 public class PatientController {
-	private final PatientService patientService;
-	@GetMapping("")
-	public ResponseEntity getAll() {
-		List<Patient> list = patientService.getAllPatient();
-		if (list != null) {
-            return new ResponseEntity(list, HttpStatus.OK);
-        }else{
-            return new ResponseEntity("No patient",HttpStatus.OK);
+    private final PatientService patientService;
+    private final UserService userService;
+    private final CliniqueService cliniqueService;
+    private final PatientRepository patientRepository;
+
+    @GetMapping("")
+    public ResponseEntity getAll(@RequestHeader("Authorization") String RequestHeader) {
+        User user = userService.getUserAuthority(RequestHeader);
+        List<Patient> list = new ArrayList();
+        ;
+        if (user.getRole() == Role.ADMIN) {
+            list = patientService.getAllPatient();
+        } else {
+            List<Clinique> clinique = cliniqueService.getCliniqueByGerant(user.getId());
+            for (Clinique it : clinique) {
+                list = patientService.getPatientByClinique(it.getId());
+            }
         }
-	}
+        if (list != null) {
+            return new ResponseEntity(list, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("No patient", HttpStatus.OK);
+        }
+    }
+
     @GetMapping("{id}")
-    public Optional<Patient> getPatientById(@PathVariable Long id) {
-        return patientService.getPatientById(id);
+    public ResponseEntity getPatientById(@PathVariable Long id, @RequestHeader("Authorization") String RequestHeader) {
+        boolean var = false;
+        Patient list = null;
+        User user = userService.getUserAuthority(RequestHeader);
+        Optional<Patient> result = patientService.getPatientById(id);
+        if (result.isPresent()) {
+            if (user.getRole() == Role.ADMIN) {
+                var = true;
+            }
+            else {
+                list = result.get();
+                if (Objects.equals(user.getId(), list.getClinique().getGerant().getId())) {
+                    var = true;
+                }
+            }
+        }
+
+        if (result.isPresent() && var) {
+            return new ResponseEntity(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("No patient with id: " + id, HttpStatus.OK);
+        }
+
     }
 
     @GetMapping("clinique/{id}")
 
+    /*
     public List<Patient> getPatientByCliniqueId(@PathVariable Long id) {
         return patientService.getPatientByClinique(id);
     }
+    */
+    @PutMapping("{id}")
+    public ResponseEntity updateClinique(@PathVariable Long id, @RequestBody Patient updatedPatient) {
+        Patient existingPatient = patientRepository.findById(id).orElse(null);
+        if (existingPatient != null) {
+            updatedPatient.setId(id);
+            Patient result = patientRepository.save(updatedPatient);
+            return new ResponseEntity(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

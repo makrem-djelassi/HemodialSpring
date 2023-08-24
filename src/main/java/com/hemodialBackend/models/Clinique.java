@@ -29,12 +29,10 @@ public class Clinique extends AbstractEntity implements Serializable{
 
     private Integer codeClinique;
     
-    @NotBlank
     @Size(max = 50)
     @Email
     private String email;
     
-    @NotBlank
     private String label;
     
     private Integer codePrestation;
@@ -43,10 +41,8 @@ public class Clinique extends AbstractEntity implements Serializable{
     
     private Integer affiliationCaisse;
     
-    @NotBlank
     private String matriculeTva;
     
-    @NotBlank
     private String registreCommerce;
     
     @Embedded
