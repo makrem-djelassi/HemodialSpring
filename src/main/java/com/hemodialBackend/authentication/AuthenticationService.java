@@ -1,8 +1,11 @@
 package com.hemodialBackend.authentication;
 
 import com.hemodialBackend.config.JwtService;
+import com.hemodialBackend.models.Clinique;
 import com.hemodialBackend.models.Role;
 import com.hemodialBackend.models.User;
+import com.hemodialBackend.repositories.CliniqueRepository;
+import com.hemodialBackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final UserRepository userRepository;
+    private final CliniqueRepository cliniqueRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -76,8 +80,14 @@ public class AuthenticationService {
         newUser.setRole(Role.DOCTOR);
 
         User savedUser=userRepository.save(newUser);
-        if(savedUser!=null){
-            return ResponseEntity.ok("Patient enregistre avec succes!");
+
+        User user = userRepository.findByEmail(savedUser.getEmail()).orElse(null);
+        Clinique newClinique=new Clinique();
+        newClinique.setGerant(user);
+        Clinique savedClinique = cliniqueRepository.save(newClinique);
+
+        if(savedUser!=null && savedClinique!=null){
+            return ResponseEntity.ok("Compte enregistre avec succes!");
         }else
             return ResponseEntity.badRequest().body("User not created");
     }

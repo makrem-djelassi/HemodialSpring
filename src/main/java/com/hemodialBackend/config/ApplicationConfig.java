@@ -1,6 +1,6 @@
 package com.hemodialBackend.config;
 
-import com.hemodialBackend.authentication.UserRepository;
+import com.hemodialBackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

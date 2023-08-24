@@ -1,9 +1,8 @@
 package com.hemodialBackend.services;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.hemodialBackend.models.Patient;
-import com.hemodialBackend.models.User;
 import org.springframework.stereotype.Service;
 
 import com.hemodialBackend.models.Clinique;
@@ -20,10 +19,12 @@ public class CliniqueService {
         return cliniqueRepository.findAll();
     }
 
-	public Clinique getCliniqueByGerant(User gerant){
 
-		return cliniqueRepository.findCliniqueByGerant(gerant);
+	public List<Clinique> getCliniqueByGerant(Long id){
+
+		return cliniqueRepository.findCliniqueByGerant_Id(id);
 	}
+
 
 	public Clinique save(Clinique newClinique) {
 		Clinique result = cliniqueRepository.save(newClinique);
@@ -31,4 +32,5 @@ public class CliniqueService {
 			return result;
 		return null;
 	}
+
 }

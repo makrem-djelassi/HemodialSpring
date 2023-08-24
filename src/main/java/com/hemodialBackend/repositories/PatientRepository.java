@@ -10,5 +10,5 @@ import com.hemodialBackend.models.Patient;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-	public List<Patient> findPatientsByClinique_Id(Long cliniqueId);
+	public List<Patient> findPatientsByClinique_Id(Long Id);
 }
