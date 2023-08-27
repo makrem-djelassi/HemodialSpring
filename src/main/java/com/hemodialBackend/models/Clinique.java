@@ -64,4 +64,9 @@ public class Clinique extends AbstractEntity implements Serializable{
     @OneToMany(mappedBy = "clinique")
     @JsonIgnore
     private List<Patient> patient;
+
+    @OneToMany(mappedBy = "clinique")
+    @JsonIgnore
+    private List<Banque> banque;
+
 }

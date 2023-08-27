@@ -28,7 +28,7 @@ import java.util.List;
 @Builder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Type", discriminatorType = DiscriminatorType.STRING, length = 20)
-@Table(name="_user",
+@Table(name="gerant",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "email")
         })

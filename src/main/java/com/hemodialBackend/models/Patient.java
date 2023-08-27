@@ -2,6 +2,7 @@ package com.hemodialBackend.models;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -32,12 +33,16 @@ public class Patient  extends AbstractEntity{
     private String codeBureau;
     
     @Column
-    @Size(min=10)
+    @Size(max=10)
     private String numeroAssurePrefix;
     
     @Column 
-    @Size(min=2)
+    @Size(max=2)
     private String numeroAssureSuffix;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TypePatient type;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -45,5 +50,10 @@ public class Patient  extends AbstractEntity{
 
     @ManyToOne
     private Clinique clinique;
+
+    @OneToOne(mappedBy = "patient")
+    @JsonIgnore
+    private Caisse caisse;
+
 
 }
