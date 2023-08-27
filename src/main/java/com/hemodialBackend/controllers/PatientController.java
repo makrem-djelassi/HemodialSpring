@@ -79,23 +79,25 @@ public class PatientController {
 
     }
 
-    @GetMapping("clinique/{id}")
-
-    /*
-    public List<Patient> getPatientByCliniqueId(@PathVariable Long id) {
-        return patientService.getPatientByClinique(id);
-    }
-    */
     @PutMapping("{id}")
-    public ResponseEntity updateClinique(@PathVariable Long id, @RequestBody Patient updatedPatient) {
+    public ResponseEntity updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient) {
         Patient existingPatient = patientRepository.findById(id).orElse(null);
         if (existingPatient != null) {
             updatedPatient.setId(id);
             Patient result = patientRepository.save(updatedPatient);
             return new ResponseEntity(result, HttpStatus.OK);
         } else {
-            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No patient with id: " + existingPatient, HttpStatus.OK);
         }
+    }
+
+    @PostMapping("")
+    public ResponseEntity AddPatient(@RequestBody Patient newPatient) {
+        Patient result = patientService.save(newPatient);
+        if (result != null)
+            return new ResponseEntity(result, HttpStatus.OK);
+        return new ResponseEntity(null, HttpStatus.OK);
+
     }
 
 }

@@ -51,7 +51,7 @@ public class CliniqueController {
 		}
 	}
 
-	@PostMapping("")
+/*	@PostMapping("")
 	public ResponseEntity AddClinique(@RequestBody Clinique newClinique) {
 		Clinique result = cliniqueService.save(newClinique);
 		if (result != null)
@@ -59,6 +59,8 @@ public class CliniqueController {
 		return new ResponseEntity(null, HttpStatus.OK);
 
 	}
+
+ */
 
 	@PutMapping("{id}")
 	public ResponseEntity updateClinique(@PathVariable Long id, @RequestBody Clinique updatedClinique) {

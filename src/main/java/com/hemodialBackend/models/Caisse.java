@@ -21,6 +21,7 @@ public class Caisse extends AbstractEntity{
 	@Column
 	private String label;
 
-
+	@OneToOne
+	private Patient patient;
 }
 
