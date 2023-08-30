@@ -1,12 +1,16 @@
 package com.hemodialBackend.services;
 
+import com.hemodialBackend.models.Caisse;
 import com.hemodialBackend.models.Role;
 import com.hemodialBackend.models.User;
+import com.hemodialBackend.repositories.CaisseRepository;
 import com.hemodialBackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class HemodialInit implements CommandLineRunner {

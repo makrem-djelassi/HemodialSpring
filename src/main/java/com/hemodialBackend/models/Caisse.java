@@ -2,6 +2,7 @@ package com.hemodialBackend.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +22,9 @@ public class Caisse extends AbstractEntity{
 	@Column
 	private String label;
 
-	@OneToOne
-	private Patient patient;
+	@OneToMany(mappedBy = "caisse")
+	@JsonIgnore
+	private List<Patient> patient;
+
 }
 

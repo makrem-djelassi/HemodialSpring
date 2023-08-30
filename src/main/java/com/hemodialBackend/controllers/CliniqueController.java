@@ -27,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 
 public class CliniqueController {
 
-	String zz;
 	private final CliniqueService cliniqueService;
 	@Autowired
 	private UserService userService;

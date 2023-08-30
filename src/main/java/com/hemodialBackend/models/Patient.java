@@ -51,8 +51,7 @@ public class Patient  extends AbstractEntity{
     @ManyToOne
     private Clinique clinique;
 
-    @OneToOne(mappedBy = "patient")
-    @JsonIgnore
+    @ManyToOne
     private Caisse caisse;
 
 
