@@ -40,7 +40,7 @@ public class AuthenticationService {
 //                user.setRole(Role.DOCTEUR);
 //            break;
 //            case "ADMIN":
-//                user.setRole(Role.ADMIN);
+//                user.setRole(Role.Admin);
 //            break;
 //            default:
 //                user.setRole(Role.PATIENT);
@@ -77,7 +77,7 @@ public class AuthenticationService {
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setDateNaissance(request.getDateNaissance());
         newUser.setPhone(request.getPhone());
-        newUser.setRole(Role.DOCTOR);
+        newUser.setRole(Role.Doctor);
 
         User savedUser=userRepository.save(newUser);
 

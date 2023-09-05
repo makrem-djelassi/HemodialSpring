@@ -39,7 +39,7 @@ public class BanqueController {
     public ResponseEntity getAll(@RequestHeader("Authorization") String RequestHeader) {
 
         User user=userService.getUserAuthority(RequestHeader);
-        if (user.getRole() == Role.ADMIN){
+        if (user.getRole() == Role.Admin){
             List<Banque> list;
             list = banqueService.getAllBanque();
             return new ResponseEntity(list, HttpStatus.OK);
