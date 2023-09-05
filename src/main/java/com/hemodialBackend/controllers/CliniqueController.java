@@ -37,7 +37,7 @@ public class CliniqueController {
 
 		User user=userService.getUserAuthority(RequestHeader);
 		List<Clinique> list;
-		if (user.getRole() == Role.ADMIN){
+		if (user.getRole() == Role.Admin){
 			list = cliniqueService.getAllClinique();
 		}else{
 			list = cliniqueService.getCliniqueByGerant(user.getId());

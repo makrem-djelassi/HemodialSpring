@@ -28,4 +28,7 @@ public class CaisseService {
         return null;
     }
 
+    public Long getCaisseCount(){
+        return caisseRepository.count();
+    }
 }

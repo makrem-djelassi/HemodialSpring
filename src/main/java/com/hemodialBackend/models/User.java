@@ -79,7 +79,7 @@ public class User implements UserDetails {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Role role = Role.DOCTOR;
+    private Role role = Role.Doctor;
 
     @JsonIgnore
     private String username;

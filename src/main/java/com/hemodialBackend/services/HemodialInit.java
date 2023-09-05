@@ -16,7 +16,8 @@ import java.util.List;
 public class HemodialInit implements CommandLineRunner {
         @Autowired
         private UserRepository userRepository;
-
+@Autowired
+private CaisseService caisseService;
         @Autowired
         private PasswordEncoder passwordEncoder;
 
@@ -27,9 +28,15 @@ public class HemodialInit implements CommandLineRunner {
                 User adminUser = new User();
                 adminUser.setUsername(adminUsername);
                 adminUser.setPassword(passwordEncoder.encode("admin")); // Replace with your desired admin password
-                adminUser.setRole(Role.ADMIN);
+                adminUser.setRole(Role.Admin);
                 adminUser.setEmail("admin@admin.com");
                 userRepository.save(adminUser);
+            }
+            if(caisseService.getCaisseCount()==0){
+                Caisse caisseNew = new Caisse();
+                caisseNew.setCode("CNAM");
+                caisseNew.setLabel("Caisse nationnal d'assurance maladie");
+                caisseService.save(caisseNew);
             }
         }
     }

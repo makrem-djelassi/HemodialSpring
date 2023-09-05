@@ -38,7 +38,7 @@ public class PatientController {
         User user = userService.getUserAuthority(RequestHeader);
         List<Patient> list = new ArrayList();
         ;
-        if (user.getRole() == Role.ADMIN) {
+        if (user.getRole() == Role.Admin) {
             list = patientService.getAllPatient();
         } else {
             List<Clinique> clinique = cliniqueService.getCliniqueByGerant(user.getId());
@@ -60,7 +60,7 @@ public class PatientController {
         User user = userService.getUserAuthority(RequestHeader);
         Optional<Patient> result = patientService.getPatientById(id);
         if (result.isPresent()) {
-            if (user.getRole() == Role.ADMIN) {
+            if (user.getRole() == Role.Admin) {
                 var = true;
             }
             else {
