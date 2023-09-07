@@ -21,20 +21,28 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
   mail:
-    host: smtp.gmail.com
-    password: 30123012
+    host: smtp-mail.outlook.com
+    password: 'Azerty123456'
+    username: prodialyse@outlook.com
     port: 587
+    store:
+      protocol: pop3
     properties:
       mail:
         debug: true
         transport:
           protocol: smtp
         smtp:
+          connecttimeout: 5000
+          timeout: 30000
+          writetimeout: 5000
           auth: true
           starttls:
             enable: true
-    username: hemodial@gmail.com
+        store:
+          protocol: pop3
   variables:
     secretKey: "3F4528472B4B6250655368566D597133743677397A24432646294A404D635166"
     expiredTime: 86400000
