@@ -17,16 +17,16 @@ public class UserService {
     private JwtService jwtService;
     @Autowired
     private UserRepository userRepository;
-public User getUserAuthority(String token) {
-    String email = jwtService.extractUsername(token.substring(7));
-    return userRepository.findByEmail(email).orElse(null);
-}
+    public User getUserAuthority(String token) {
+        String email = jwtService.extractUsername(token.substring(7));
+        return userRepository.findByEmail(email).orElse(null);
+    }
     public void updateResetPasswordToken(String token,String email) throws UsernameNotFoundException {
-        Optional<User> user=userRepository.findByEmail(email);
+        User user=userRepository.findByEmail(email).get();
         if(user!=null) {
-            user.get().setResetPasswordToken(token);
+            user.setResetPasswordToken(token);
             try{
-                userRepository.save(user.get());
+                userRepository.save(user);
             }catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
